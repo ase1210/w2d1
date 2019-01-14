@@ -41,6 +41,10 @@ class BestFriend
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
+
+    raise StandardError.new("Best friends need to know each other for at least 5 years") if @yrs_known < 5
+    raise StandardError.new("You need to enter a name") if @name.length <= 0
+    raise StandardError.new("You need to enter a favorite past time") if @fav_pastime.length <= 0
   end
 
   def talk_about_friendship
