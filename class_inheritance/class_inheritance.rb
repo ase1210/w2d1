@@ -24,12 +24,12 @@ class Manager < Employee
     bonus = salary_total_of_employees_beneath_you * multiplier
   end
 
-  def salary_total_of_employees_beneath_you
+  def salary_of_sub_employees
     total = 0
     @employees.each do |employee|
       if employee.is_a?(Manager)
         total += employee.salary
-        total += employee.salary_total_of_employees_beneath_you
+        total += employee.salary_of_sub_employees
       else
         total += employee.salary
       end
