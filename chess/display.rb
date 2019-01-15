@@ -1,10 +1,10 @@
 require 'colorize' 
-# require 'board'
-# require 'cursor'
+require_relative 'board'
+require_relative 'cursor' 
 
 class Display
   attr_reader :cursor 
-  def initialize
+  def initialize(board)
     @cursor = Cursor.new([0, 0], board)
   end
 
@@ -16,13 +16,22 @@ class Display
       print "#{idx} "
       row.each_with_index do |piece, idx2|
         if piece.is_a?(NullPiece)
-          print '-'.colorize(:blue) if cursor.cursor_pos == [idx, idx2]
+          if cursor.cursor_pos == [idx, idx2]
+            print '-'.colorize(:blue) 
+          else
+            print '-'
+          end
         else 
-          print 'P'.colorize(:blue) if cursor.cursor_pos == [idx, idx2]
+          if cursor.cursor_pos == [idx, idx2]
+            print 'P'.colorize(:blue) 
+          else
+            print 'P'
+          end
         end
       end 
       puts ''
     end
+    nil
   end
 
 end
