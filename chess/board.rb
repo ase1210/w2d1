@@ -16,6 +16,10 @@ class Board
     nil
   end
 
+  def valid_pos?(pos)
+    !self[pos].nil?
+  end
+  
   private
 
   def valid_move?(start_pos, end_pos)

@@ -29,6 +29,7 @@ MOVES = {
   up: [-1, 0],
   down: [1, 0]
 }
+class InvalidMoveError < ArgumentError; end
 
 class Cursor
 
@@ -42,6 +43,8 @@ class Cursor
   def get_input
     key = KEYMAP[read_char]
     handle_key(key)
+  rescue InvalidMoveError
+    retry
   end
 
   private
@@ -97,5 +100,12 @@ class Cursor
   end
 
   def update_pos(diff)
+    curr_pos = cursor_pos
+    x, y = curr_pos
+    x += diff[0]
+    y += diff[1]
+    new_pos = [x, y]
+    raise InvalidMoveError.new("Cursor cannot move there") unless board.valid_pos?(new_pos)
+    @cursor_pos = new_pos
   end
 end
