@@ -7,7 +7,21 @@ class Board
     setup_default_grid
   end
 
+  def move_piece(start_pos, end_pos)
+    raise ArguementError.new("There is no piece at #{start_pos}") if self[start_pos].is_a?(NullPiece)
+    raise ArguementError.new("You cannot move to #{end_pos}") unless valid_move?(start_pos, end_pos)
+    piece = self[start_pos]
+    self[end_pos] = piece
+    self[start_pos] = NullPiece.new
+    nil
+  end
+
   private
+
+  def valid_move?(start_pos, end_pos)
+    true
+  end
+
   def [](pos)
     x,y = pos 
     @grid[x][y]
@@ -23,11 +37,15 @@ class Board
       case idx 
       when 0, 1, 6, 7
         row.each_index do |col|
-          grid[idx][col] = Piece.new 
+          pos = [idx, col]
+          self[pos] = Piece.new
+          # grid[idx][col] = Piece.new 
         end
       else
         row.each_index do |col|
-          grid[idx][col] = NullPiece.new 
+          pos = [idx, col]
+          self[pos] = NullPiece.new
+          # grid[idx][col] = NullPiece.new 
         end
       end 
     end
